@@ -17,6 +17,5 @@ datasource db {
 model Account {
   id                String  @id
   accountNumberBase Int     @unique @default(autoincrement())
-  accountDV         String?
   balance           Decimal @default(0.0)
 }
