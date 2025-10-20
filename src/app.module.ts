@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { PrismaModule } from './shared/infra/database/prisma/prisma.module';
+import { CreateAccountController } from './modules/accounts/useCases/createAccount/CreateAccountController';
+import { CreateAccountUseCase } from './modules/accounts/useCases/createAccount/CreateAccountUseCase';
+import { LockModule } from './shared/infra/lock/lock.module';
+import { TransferUseCase } from './modules/transfers/useCases/transfer/TransferUseCase';
+import { TransferController } from './modules/transfers/useCases/transfer/TransferController';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [PrismaModule, LockModule],
+  controllers: [CreateAccountController, TransferController],
+  providers: [CreateAccountUseCase, TransferUseCase],
 })
 export class AppModule {}
