@@ -1,3 +1,4 @@
+import { TransactionContext } from '@/shared/application/uow/unit-of-work';
 import { Account } from '../../entities/Account';
 import { IAccountRepository } from '../IAccountRepository';
 
@@ -5,7 +6,10 @@ export class AccountsRepositoryInMemory implements IAccountRepository {
   accounts: Account[] = [];
   private counter = 1;
 
-  async findById(id: string): Promise<Account | null> {
+  async findById(
+    id: string,
+    _tx?: TransactionContext,
+  ): Promise<Account | null> {
     return this.accounts.find((account) => account.id === id) ?? null;
   }
 
@@ -22,5 +26,21 @@ export class AccountsRepositoryInMemory implements IAccountRepository {
     account.accountNumberBase = this.counter++;
     this.accounts.push(account);
     return account;
+  }
+
+  async debitIfEnough(
+    id: string,
+    amount: number,
+    _tx: TransactionContext,
+  ): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+
+  async credit(
+    id: string,
+    amount: number,
+    _tx: TransactionContext,
+  ): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }

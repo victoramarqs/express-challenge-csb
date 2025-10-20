@@ -15,6 +15,7 @@ export class AccountMapperPrisma {
       {
         accountNumberBase: raw.accountNumberBase,
         balance: Number(raw.balance),
+        createdAt: raw.createdAt,
       },
       raw.id,
     );

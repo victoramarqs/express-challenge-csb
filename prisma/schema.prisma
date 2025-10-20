@@ -15,7 +15,22 @@ datasource db {
 }
 
 model Account {
-  id                String  @id
-  accountNumberBase Int     @unique @default(autoincrement())
-  balance           Decimal @default(0.0)
+  id                String   @id
+  accountNumberBase Int      @unique @default(autoincrement())
+  balance           Decimal  @default(0.0)
+  createdAt         DateTime @default(now())
+
+  transfersSent     Transfer[] @relation("AccountTransfersSent")
+  transfersReceived Transfer[] @relation("AccountTransfersReceived")
+}
+
+model Transfer {
+  id            String   @id
+  transactionId String   @unique
+  from          Account  @relation("AccountTransfersSent", fields: [fromAccountId], references: [id])
+  fromAccountId String
+  to            Account  @relation("AccountTransfersReceived", fields: [toAccountId], references: [id])
+  toAccountId   String
+  amount        Decimal
+  createdAt     DateTime @default(now())
 }
